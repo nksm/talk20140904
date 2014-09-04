@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ShadowDOM</title>
+<style type="text/css">
+  #host {
+   padding: 5px;
+  }
+  p {
+    color: red;
+  }
+  span {
+    text-decoration: underline;
+  }
+</style>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    // Shadow Rootを子要素に抱えるホストとなる要素を指定
+    var host = document.querySelector('#host');
+    
+    // Shadow Rootを子要素に抱えるホストとなる要素を指定
+    var tmpl = document.querySelector('#tmpl');
+    
+    // template の中身を取得する
+    var content = tmpl.content;
+    
+    // Shadow Host を指定する
+    // ここで要素がShadow Hostとなった時点で元々持っていた子要素は、レンダリングされなくなる
+    // Shadow Rootとその子要素がレンダリングされる
+    var root = host.createShadowRoot();
+    
+    // Shadow Root にテンプレートをクローンして追加する
+    root.appendChild(content.cloneNode(true));
+  });
+</script>
+</head>
+<body>
+
+<p>color is red</p>
+<div id="host">I'm Host</div>
+
+<template id="tmpl">
+  <style>
+    :host { /* ShadowRoot の要素に対する疑似セレクタ */
+      border: 4px dotted black;
+    }
+    #guest {
+      border: 4px double black;
+    }
+  </style>
+  <p id="guest">Hello! <span>Shadow DOM</span></p>
+</template>
+</body>
+</html>

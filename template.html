@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Template</title>
+<style type="text/css">
+.img {
+    width: 200px;
+    height: auto;
+}
+</style>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    // テンプレートとなる要素を指定
+    var tmpl = document.querySelector('#tmpl');
+    
+    // テンプレート要素をクローン
+    var clone = tmpl.content.cloneNode(true);
+    
+    // クローンしたテンプレートを body に挿入
+    document.body.appendChild(clone);
+  });
+</script>
+</head>
+<body>
+<template id="tmpl">
+  <style type="text/css">
+    .img--miisan {
+        width: 100px;
+        height: auto;
+    }
+  </style>
+  <h1>template</h1>
+  <img src="images/image.jpg" class="img img--miisan">
+</template>
+<script>
+
+</script>
+</body>
+</html>

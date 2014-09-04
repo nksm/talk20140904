@@ -1,0 +1,26 @@
+<template id="tmpl">
+  <style type="text/css">
+    :host {
+      display: block;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+    :host([warning]) {
+      border-color: red;
+    }
+    :host([success]) {
+      border-color: blue;
+    }
+    p {
+      color: orange;
+    }
+  </style>
+  <div class="message">
+    <p class="message__title"></p>
+    <div class="message__body">
+        <content></content>
+    </div>
+  </div>
+</template>

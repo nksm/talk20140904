@@ -1,0 +1,24 @@
+{
+  "name": "talk20140904",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://nksm@github.com/nksm/talk20140904.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nksm/talk20140904/issues"
+  },
+  "homepage": "https://github.com/nksm/talk20140904",
+  "devDependencies": {
+    "bower": "^1.3.9",
+    "gulp": "^3.8.7",
+    "gulp-ruby-sass": "^0.7.1"
+  }
+}

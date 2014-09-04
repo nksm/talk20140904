@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Web Components</title>
+<style type="text/css">
+
+div {
+  border: 5px solid #000 !important;
+}
+
+p {
+  font-weight: bold;
+}
+
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+
+  // CustomElements を利用する
+  var element = Object.create(HTMLElement.prototype);
+  
+  // カスタムエレメントにメソッドやプロパティを追加する
+  element.createdCallback = function() {
+    console.log('element load');
+    var tmpl = document.querySelector('#tmpl');
+    var content = tmpl.content;
+    
+    // ShadowDOM を利用する
+    var root = this.createShadowRoot();
+    root.appendChild(content.cloneNode(true));
+    
+    // message の追加先
+    this.insertText = root.querySelector('.message__title');
+    
+    // 特定の属性があれば、追加する
+    if(this.hasAttribute('message')) {
+      var message = this.getAttribute('message');
+      console.log(message);
+      // カスタムメソッド
+      this.setTitle(message);
+    }
+  };
+  // 作った要素にカスタムメソッドを追加する
+  element.setTitle = function(val) {
+    this.message = val;
+    this.insertText.textContent = this.message;
+  };
+  // カスタムエレメントを登録する
+  document.registerElement('my-message', {
+    prototype: element
+  });
+  
+});
+</script>
+</head>
+<body>
+
+<my-message message="未入力項目があります。" warning>
+<p>メールアドレスを入力してください。</p>
+</my-message>
+
+<my-message message="" success>
+<p>OK</p>
+</my-message>
+
+<template id="tmpl">
+  <style type="text/css">
+    :host {
+      display: block;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+    :host([warning]) {
+      border-color: red;
+    }
+    :host([success]) {
+      border-color: blue;
+    }
+    p {
+      color: orange;
+    }
+  </style>
+  <div class="message">
+    <p class="message__title"></p>
+    <div class="message__body">
+        <content></content>
+    </div>
+  </div>
+</template>
+
+</body>
+</html>

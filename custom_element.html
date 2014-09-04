@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CustomElements</title>
+<script>
+/*
+ライフサイクルコールバック
+createdCallback   要素のインスタンスが生成されたとき
+attachedCallback  要素がドキュメントに追加されたとき
+detachedCallback  要素がドキュメントから削除されたとき
+attributeChangedCallback  要素の属性が追加・変更・削除いずれかの操作を受けたとき
+*/
+
+// 点滅するspan要素を定義する
+var xSpan = Object.create(HTMLElement.prototype);
+
+// インスタンスが生成された時の挙動を登録する
+xSpan.attachedCallback = function() {
+  var self = this;
+  this.timer = setInterval(function() {
+    self.style.opacity = self.style.opacity|0 ? 0 : 1;
+    }, 500);
+};
+
+// インスタンスが削除された時の挙動を登録する
+xSpan.detachedCallback = function() {
+  clearTimeout(this.timer);
+};
+
+// 要素を登録し、span タグを拡張する
+document.registerElement('x-blink', {
+  // 拡張する要素を指定する
+  extends:'span',
+  prototype: xSpan
+});
+
+// 単純にメッセージを内包したカスタム要素
+var xGreeting = Object.create(HTMLElement.prototype);
+
+xGreeting.attachedCallback = function() {
+  this.ready();
+};
+
+xGreeting.ready = function() {
+  this.innerHTML = "<div>Hello, Custom Elements!</div>";
+};
+
+xGreeting.createdCallback = function() {
+  console.log('hello!');
+};
+
+document.registerElement('x-greeting', {
+  prototype: xGreeting
+});
+
+
+// <x-greeting> タグを追加するボタン
+var addGreetingBtn = Object.create(HTMLButtonElement.prototype);
+
+addGreetingBtn.createdCallback = function() {
+  this.style.background = '#ccc'
+  this.onmousedown = function() {
+    this.insertTag();
+    this.style.background = '#999'
+  };
+  this.onmouseup = function() {
+    this.style.background = '#ccc'
+  };
+};
+
+addGreetingBtn.insertTag = function() {
+  var xGreetingElement = document.createElement('x-greeting');
+  console.log('push!')
+  document.querySelector('.message').appendChild(xGreetingElement);
+};
+
+document.registerElement('add-greeting', {
+  extends:'button',
+  prototype: addGreetingBtn
+});
+
+</script>
+</head>
+<body>
+<div><p is="x-blink">p[is="x-blink"]：点滅しない</p><p><span>span:not([is="*"])：点滅しない</span></p></div>
+<div><p><span is="x-blink">span[is="x-blink"]：点滅</span></p></div>
+<div><button is="add-greeting">追加する</button></div>
+<div class="message">
+  <x-greeting></x-greeting>
+</div>
+</body>
+</html>
