@@ -130,7 +130,7 @@ WebCompnents 周りだと一番の目玉仕様。
 
 独自に作ったコンポーネントを読み込む技術。
 
-- <script> や <link> で JS / CSS を読み込むように html を読み込むことができる
+- `<script>` や `<link>` で JS / CSS を読み込むように html を読み込むことができる
 - `onload` `onerror` のイベントハンドラがある
 - CORS(Cross-Origin Resource Sharing)の制約も適用される
 - async 属性もサポート
